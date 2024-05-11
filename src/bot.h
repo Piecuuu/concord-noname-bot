@@ -4,10 +4,12 @@
 #include <concord/discord.h>
 #include <concord/logconf.h>
 #include <stdlib.h>
+#include <libpq-fe.h>
 
 struct Bot {
   struct discord* client;
   struct Config* config;
+  PGconn* db_conn;
 };
 
 extern struct Bot* bot_global;

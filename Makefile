@@ -2,7 +2,8 @@ SRC = src
 CMDDIR = $(SRC)/commands
 EVEDIR = $(SRC)/events
 
-ROOT = $(SRC)/bot.o $(SRC)/config.o $(SRC)/main.o $(SRC)/event.o $(SRC)/command.o
+ROOT = $(SRC)/bot.o $(SRC)/config.o $(SRC)/main.o $(SRC)/event.o $(SRC)/command.o \
+       $(SRC)/db.o
 EVENTS = $(EVEDIR)/interaction_create.o $(EVEDIR)/ready.o
 COMMANDS = $(CMDDIR)/ping.o
 
@@ -13,7 +14,7 @@ PROGRAM = bot
 CC = cc
 CCLD = cc
 CFLAGS = -g -I/usr/local/include -std=gnu99
-LDFLAGS = -ldiscord -lcurl -ltoml
+LDFLAGS = -ldiscord -lcurl -ltoml -lpq
 
 .SUFFIXES: .c .o
 

@@ -8,7 +8,10 @@
 #include <errno.h>
 
 #define DEFAULT_CONFIG "[bot]\n" \
-                       "token = \"YOUR-TOKEN-HERE\"\n"
+                       "token = \"YOUR-TOKEN-HERE\"\n" \
+                       "\n" \
+                       "[db]\n" \
+                       "connection_string = \"dbname=database user=youruser password=yourpassword host=localhost port=5432\"\n" \
 
 FILE* config_try_create_new_config() {
   FILE* new_config = fopen(CONFIG_FILE, "w");
@@ -60,8 +63,20 @@ void config_serialize(FILE* file) {
     log_fatal("Cannot get `token` from config\n");
     exit(1);
   }
-
   config->token = token.u.s;
+
+  toml_table_t* db = toml_table_in(conf, "db");
+  if(!bot) {
+    log_fatal("Cannot parse [db]\n");
+    exit(1);
+  }
+
+  toml_datum_t db_conn = toml_string_in(db, "connection_string");
+  if(!db_conn.ok) {
+    log_fatal("Cannot get `connection_string` from config\n");
+    exit(1);
+  }
+  config->db_conn_str = db_conn.u.s;
 
   bot_global->config = config;
 }

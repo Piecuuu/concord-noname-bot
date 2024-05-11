@@ -10,6 +10,7 @@
 
 struct Config {
   char* token;
+  char* db_conn_str;
 };
 
 FILE* config_open_file();
