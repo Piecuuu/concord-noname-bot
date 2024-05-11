@@ -1,0 +1,5 @@
+bot
+*.log
+config.toml
+.vscode
+*.o
